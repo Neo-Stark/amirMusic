@@ -1,0 +1,53 @@
+{% extends "base.html"%}
+{% block content %}
+<div>
+    <a href="{% url 'index' %}">
+        <button type="submit" class="btn" id="back-to-index">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+    </a>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <img src="{{ album.cover.url }}" class="card-img-top" alt="{{ album }}">
+        </div>
+        <div class="col">
+            <p><b>Título: </b>{{album.titulo}}</p>
+            <p><b>Grupo: </b>{{album.grupo}}</p>
+            <p><b>Fecha lanzamiento: </b>{{album.fecha_lanzamiento}}</p>
+            <p><b>Distribuidora: </b>{{album.distribuidora}}</p>
+        </div>
+        <div class="col">
+        {% if user.is_staff %}
+            <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#delete-confirmation">Eliminar</button>
+            <a href="{% url 'modificar' model='Album' oid=album.id %}" class="btn btn-warning btn-sm ml-1" role="button">Modificar</a>
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- dialogo modal de eliminación -->
+<div class="modal fade" role="dialog" tabindex="-1" id="delete-confirmation" aria-labelledby="delete-confirmation" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Eliminar Álbum</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Estás seguro de que quieres eliminar el álbum {{album.titulo}}?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <a href="{% url 'eliminar' model='Album' oid=album.id %}" role="button" class="btn btn-danger">Eliminar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

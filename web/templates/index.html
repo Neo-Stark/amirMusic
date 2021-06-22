@@ -1,0 +1,86 @@
+{% extends "base.html"%}
+{% block content %}
+<link rel="stylesheet" href="/static/css/index.css"/>
+<div>
+  <button type="submit" class="btn" id="navbar"><i class="far fa-eye-slash"></i>Ocultar Navbar</button>
+</div>
+
+<h2> Álbumes {% if user.is_staff %}<a href="{% url 'form_album' %}" class="btn btn-success btn-sm ml-1">Nuevo</a>{% endif %} </h2>
+<ul>
+  {% for o in albumes %}
+    <li>
+      <div class="card" style="width: 18rem;">
+        {% if o.cover %}
+        <img src="{{ o.cover.url }}" class="card-img-top" alt="{{ o }}">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ o }}</h5>
+          <p class="card-text">{{ o.grupo }}</p>
+          <a href="{%url 'detalles_album' oid=o.id%}" class="btn btn-primary">Detalles</a>
+        </div>
+      </div>
+      {% if user.is_staff %}
+      <a href="{% url 'eliminar' model='Album' oid=o.id %}" class="btn btn-danger btn-sm ml-1" role="button">Eliminar</a>
+      <a href="{% url 'modificar' model='Album' oid=o.id %}" class="btn btn-warning btn-sm ml-1" role="button">Modificar</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+<h2> Músicos {% if user.is_staff %}<a href="{% url 'form_musico' %}" class="btn btn-success btn-sm ml-1">Nuevo</a>{% endif %} </h2>
+<ul>
+  {% for o in musicos %}
+    <li>
+      <p>{{ o }}</p>
+      {% if user.is_staff %}
+      <a href="{% url 'eliminar' model='Musico' oid=o.id %}" class="btn btn-danger btn-sm ml-1" role="button">Eliminar</a>
+      <a href="{% url 'modificar' model='Musico' oid=o.id %}" class="btn btn-warning btn-sm ml-1" role="button">Modificar</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+  <nav aria-label="Musicos paginator">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+      {% if musicos.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ musicos.number|add:-1 }}">{{ musicos.number|add:"-1" }}</a></li>
+      {% endif %}
+      <li class="page-item active"><a class="page-link" href="?page={{ musicos.number }}">{{ musicos.number }}</a></li>
+      {% if musicos.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ musicos.number|add:1 }}">{{ musicos.number|add:1 }}</a></li>
+      {% endif %}
+      <li class="page-item"><a class="page-link" href="?page={{ musicos.paginator.num_pages }}">Last</a></li>
+    </ul>
+  </nav>
+
+
+  <h2> Grupos {% if user.is_staff %}<a href="{% url 'form_grupo' %}" class="btn btn-success btn-sm ml-1">Nuevo</a>{% endif %} </h2>
+  <div class="Grupos">
+  <ul>
+    {% for o in grupos %}
+      <li>
+        <p>{{ o }}</p>
+       {% if user.is_staff %}
+        <a href="{% url 'eliminar' model='Grupo' oid=o.id %}" class="btn btn-danger btn-sm ml-1" role="button">Eliminar</a>
+        <a href="{% url 'modificar' model='Grupo' oid=o.id %}" class="btn btn-warning btn-sm ml-1" role="button">Modificar</a>
+       {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+
+  <nav aria-label="grupos paginator">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="?pageGrupos=1">First</a></li>
+      {% if grupos.has_previous %}
+      <li class="page-item"><a class="page-link" href="?pageGrupos={{ grupos.number|add:-1 }}">{{ grupos.number|add:"-1" }}</a></li>
+      {% endif %}
+      <li class="page-item active"><a class="page-link" href="?pageGrupos={{ grupos.number }}">{{ grupos.number }}</a></li>
+      {% if grupos.has_next %}
+      <li class="page-item"><a class="page-link" href="?pageGrupos={{ grupos.number|add:1 }}">{{ grupos.number|add:1 }}</a></li>
+      {% endif %}
+      <li class="page-item"><a class="page-link" href="?pageGrupos={{ grupos.paginator.num_pages }}">Last</a></li>
+    </ul>
+  </nav>
+  </div>
+{% endblock %}

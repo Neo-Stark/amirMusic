@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  mongo:
+    image: mongo:4.2
+    ports:
+      - 27017:27017
+    restart: always
+    volumes:
+      - ./datos_db:/data/db
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+  web:
+    build: web
+    ports:
+      - 8000:8000
+    restart: always
+    command: python manage.py runserver 0.0.0.0:8000 # servidor de desarrollo
+    volumes:
+      - ./web:/web
+    depends_on:
+      - mongo
