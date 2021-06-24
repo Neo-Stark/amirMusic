@@ -3,10 +3,27 @@ from django.db.models import Count
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import HttpResponse, redirect, render
 from django.template.loader import render_to_string
+from rest_framework import viewsets
 
 from .forms import *
 from .models import *
+from .serializers import *
 
+# API views
+
+class AlbumViewSet(viewsets.ModelViewSet):
+    queryset = Album.objects.all()
+    serializer_class = AlbumSerializer
+
+class GrupoViewSet(viewsets.ModelViewSet):
+    queryset = Grupo.objects.all()
+    serializer_class = GrupoSerializer
+    
+class MusicoViewSet(viewsets.ModelViewSet):
+    queryset = Musico.objects.all()
+    serializer_class = MusicoSerializer
+
+# End/ API views
 
 def render_form(request, class_form):
     if 'cover' in request.FILES:

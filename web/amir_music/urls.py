@@ -1,16 +1,18 @@
 
-from django.conf.urls import url
+from django import urls
+from django.conf.urls import include, url
 from django.urls import path
-from django.conf.urls import include
-# from rest_framework import routers
+from rest_framework import routers
+
 from . import views
 
-# router = routers.DefaultRouter()
-# router.register('grupo',views.GrupoViewSet)
-# router.register('musico',views.MusicoViewSet)
-# router.register('album',views.AlbumViewSet)
+router = routers.DefaultRouter()
+router.register(r'grupo',views.GrupoViewSet)
+router.register(r'musico',views.MusicoViewSet)
+router.register(r'album',views.AlbumViewSet)
 
 urlpatterns = [
+    path('api/', include(router.urls)),
     url(r'^$', views.index, name='index'),
     url(r'^album/detalles/(?P<oid>[0-9]+)/$', views.detalles_album, name='detalles_album'),
     url(r'^grupos/form', views.form_grupo, name='form_grupo'),
