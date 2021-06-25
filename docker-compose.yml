@@ -25,3 +25,14 @@ services:
       - ./web:/web
     depends_on:
       - mongo
+  nginx:
+    image: nginx:alpine
+    ports:
+        - 80:80
+    # directorios para el archivo de configuración y archivos del static
+    volumes:
+        - ./conf:/etc/nginx/conf.d
+        - ./web/amir_music/static:/var/www/static 
+        - ./web/media:/var/www/media 
+    depends_on:
+        - web

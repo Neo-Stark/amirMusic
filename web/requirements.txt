@@ -3,5 +3,7 @@ django-allauth
 djangorestframework
 django-bootstrap4
 django-crispy-forms
+django-cors-headers
 mongoengine
 Pillow
+gunicorn

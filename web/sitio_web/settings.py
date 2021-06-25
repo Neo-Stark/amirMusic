@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ntj_a@jh$&o!%1jbzqqb+)f-g1*80)_qnp7r(y1b$sc3rh4^ay'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -51,7 +51,7 @@ LOGGING = {
 			'class': 'logging.FileHandler',
 			'filename': os.path.join(BASE_DIR, LOG_FILE),
 			'formatter': 'verbose',
-			'mode': 'w'
+			'mode': 'a'
 			},
 		'console': {
 			'level': 'DEBUG',
@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'rest_framework',
+    'corsheaders',
 
     'amir_music',
 
@@ -105,6 +106,7 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/amirMusic'
 LOGOUT_REDIRECT_URL = '/amirMusic'
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -186,3 +188,5 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CORS_ORIGIN_ALLOW_ALL = True
